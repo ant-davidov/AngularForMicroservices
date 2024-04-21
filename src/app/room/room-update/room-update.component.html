@@ -1,0 +1,59 @@
+<div class="example">
+    <form class="k-form k-form-md form-container" [formGroup]="form">
+        <h3>Аудитория {{room.name}}</h3>
+        <kendo-formfield  showErrors="initial">
+            <kendo-label [for]="building" text="Корпус"></kendo-label>
+            <kendo-dropdownlist [readonly]="true" #building required formControlName="building" >
+            </kendo-dropdownlist>       
+        </kendo-formfield>
+
+        <kendo-formfield>
+            <kendo-label [for]="name" text="Наименование"></kendo-label>
+            <kendo-textbox formControlName="name" [clearButton]="true" #name required></kendo-textbox>
+            <kendo-formerror>Error: Наименование is required</kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield showErrors="initial">
+            <kendo-label [for]="type" text="Тип"></kendo-label>
+            <kendo-dropdownlist #type required formControlName="type" [data]="listTypes">
+            </kendo-dropdownlist>       
+        </kendo-formfield>
+
+
+
+        <kendo-formfield>
+            <kendo-label for="capacity" text="Вместимость"></kendo-label>
+            <kendo-numerictextbox formControlName="capacity" required [min]="1"></kendo-numerictextbox>
+            <kendo-formerror>
+                <div *ngIf="form.controls['capacity'].errors">
+                    Error: Not a valid phone number format
+                </div>
+            </kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield>
+            <kendo-label for="floor" text="Этаж"></kendo-label>
+            <kendo-numerictextbox formControlName="floor" required [min]="1"></kendo-numerictextbox>
+            <kendo-formerror>
+                <div *ngIf="form.controls['floor'].errors">
+                    Error: Not a floor number format
+                </div>
+            </kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield>
+            <kendo-label [for]="number" text="Номер"></kendo-label>
+            <kendo-textbox formControlName="number" [clearButton]="true" #number required></kendo-textbox>
+            <kendo-formerror>Error: Наименование is required</kendo-formerror>
+        </kendo-formfield>
+
+        <div class="k-form-buttons">
+            <button kendoButton themeColor="warning" (click)="putForm()" [disabled]="!form.dirty || !this.form.valid">
+                Обновить
+            </button>
+            <button kendoButton (click)="NavigateToBack()" themeColor="success">
+                Назад
+            </button>
+        </div>
+    </form>
+</div>

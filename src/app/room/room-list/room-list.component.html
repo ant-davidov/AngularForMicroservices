@@ -1,0 +1,63 @@
+<div class="example-wrapper">
+  <kendo-stacklayout orientation="vertical" [align]="{ vertical: 'top' }">
+    <div class="box header"> <button kendoButton themeColor="primary" (click)="NavigateToAdd()" class="action-button">Добавить</button> </div>
+    <kendo-stacklayout orientation="horizontal" [style.height.px]="300">
+      <div class="box filter">
+        <div class="filter-item">
+          <label>Тип аудитории:</label>
+          <kendo-dropdownlist [(ngModel)]="selectTypeRoom" [data]="listTypes"></kendo-dropdownlist>
+        </div>
+
+        <div style="text-align: center;">
+          <div>
+            <kendo-label text="Этаж">
+              <kendo-slider
+                [fixedTickWidth]="20"
+                [min]="0"
+                [max]="10"
+                [smallStep]="1"
+                [(ngModel)]="selcetFloor"             
+                (valueChange)="onChange($event)"> 
+              </kendo-slider>
+            </kendo-label>
+          </div>
+          <div class="show-select-floor">{{ selcetFloor }}</div>
+        </div>
+
+        <div class="filter-item">
+          <label>Корпус:</label>
+          <kendo-dropdownlist [(ngModel)]="selectBuilding" [data]="listBuildings"></kendo-dropdownlist>
+        </div>
+        <div class="button-block">
+          <button kendoButton themeColor="error" (click)="resetFilter()"  class="filter-button-reset">Сбросить</button>
+          <button kendoButton themeColor="success" (click)="searchWithParametrs()" class="filter-button-get">Найти</button>
+        </div>
+      </div>
+      <div class="box box-separator"></div>
+      <div class="box content">
+        <div class="wrapper">
+          <div class="content-container" [id]="contentId">
+            <div class="room-card" *ngFor="let room of ListRoom">
+              <div class="room-info">
+                  <h3>{{ room.name }} | {{room.building?.name}}(id:{{room.buildingId}})</h3>
+                  <p><strong>Тип:</strong> {{ room.type }}</p>
+                  <p><strong>Вместимость:</strong> {{ room.capacity }}</p>
+                  <p><strong>Этаж:</strong> {{ room.floor }}</p>
+                  <p><strong>Номер:</strong> {{ room.number }}</p>
+              </div>
+              <div class="action-buttons">
+                  <button kendoButton themeColor="success" (click)="NavigateToUpdate(room.id!)" class="action-button">Редактировать</button>
+                  <button kendoButton themeColor="error" (click)="deleteRoom(room.id!)" class="action-button">Удалить</button>
+              </div>
+          </div>
+          </div>
+          <div class="datapagerContainer">
+            <kendo-datapager class="datapager" [attr.aria-controls]="contentId" [style.width.%]="100"
+              [pageSize]="pageSize" [skip]="skip" [total]="total" (pageChange)="onPageChange($event)">
+            </kendo-datapager>
+          </div>
+        </div>
+      </div>
+    </kendo-stacklayout>
+  </kendo-stacklayout>
+</div>

@@ -1,0 +1,59 @@
+<div class="example">
+    <form class="k-form k-form-md form-container" [formGroup]="form">
+      <h3>Новый корпус</h3>
+      <kendo-formfield>
+        <kendo-label [for]="name" text="Наименование"></kendo-label>
+        <kendo-textbox
+          formControlName="name"
+          [clearButton]="true"
+          #name
+          required
+        ></kendo-textbox>
+        <kendo-formerror>Error: Наименование is required</kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="address" text="Адрес"></kendo-label>
+        <kendo-textbox
+          formControlName="address"
+          [clearButton]="true"
+          #address
+          required
+        ></kendo-textbox>
+
+        <kendo-formerror>Error: Адрес is required</kendo-formerror>
+      </kendo-formfield>
+      
+      <kendo-formfield>
+        <kendo-label for="floors" text="Этажность"></kendo-label>
+        <kendo-numerictextbox
+          formControlName="floors"
+          required
+          [min]="0"
+        ></kendo-numerictextbox>
+        <kendo-formerror>
+          <div *ngIf="form.controls['floors'].errors">
+            Error: Not a valid phone number format
+          </div>
+        </kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="other" text="Прочее"></kendo-label>
+        <kendo-textarea
+          #other
+          formControlName="other"
+          resizable="vertical"
+        ></kendo-textarea>
+      </kendo-formfield>
+
+      <div class="k-form-buttons">
+        <button kendoButton themeColor="warning" (click)="postForm()" [disabled]="!form.dirty || !this.form.valid" >
+          Добавить
+        </button>
+        <button kendoButton themeColor="success" (click)="NavigateToBack()" >
+          Назад
+        </button>
+      </div>
+    </form>
+  </div>

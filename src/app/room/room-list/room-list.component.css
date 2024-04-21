@@ -1,0 +1,60 @@
+.box-separator{
+    max-width: 5%;
+}
+.filter-button-get{
+margin-left: 40px;
+width: 40%;
+}
+
+.button-block {
+    display: flex; /* Размещаем элементы внутри блока в одну строку */
+}
+
+
+.room-card {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.room-info {
+    flex: 1;
+}
+
+.room-info h3 {
+    margin-top: 0;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.action-button {
+    margin-top: 5px;
+}
+
+
+kendo-label {
+    text-align: center;
+    display: inline-grid;
+  }
+.show-select-floor{
+    min-height: 20px;
+}
+
+.filter-item{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.filter{
+    max-width: 30%;
+}
+
+  
+
+  
+ 

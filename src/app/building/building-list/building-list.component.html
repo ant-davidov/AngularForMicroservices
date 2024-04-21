@@ -1,0 +1,24 @@
+<div class="main-building-list">
+        <div kendoDialogContainer></div>
+
+        <button kendoButton themeColor="primary" fillMode="solid" (click)="NavigateToAdd()">Добавить</button>
+
+        <div class="card-container">
+                <kendo-card class="card" width="360px" *ngFor="let item of buildings">
+                        <img [src]="cover" kendoCardMedia alt="cover_img" />
+                        <kendo-card-body>
+                                <h4>{{item.name}}, {{item.address}}</h4>
+                                <hr kendoCardSeparator />
+                                <p>{{item.other}}</p>
+                                <p>{{item.floors}}</p>
+                        </kendo-card-body>
+                        <kendo-card-actions orientation="horizontal" layout="stretched">
+                                <button kendoButton themeColor="info" fillMode="solid"
+                                        (click)="NavigateToView(item.id!)">Редактировать</button>
+                                <button kendoButton themeColor="error" (click)="showDialogForDelete(item.id!)"
+                                        fillMode="solid">Удалить</button>
+                        </kendo-card-actions>
+                </kendo-card>
+
+        </div>
+</div>
