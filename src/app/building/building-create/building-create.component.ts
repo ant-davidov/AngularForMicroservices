@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BuildingDTO, BuildingService, CreateBuildingDTO } from '../../_services/building.service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationModule, NotificationService } from "@progress/kendo-angular-notification";
 
 
 @Component({
@@ -12,8 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class BuildingCreateComponent {
   public form: FormGroup;
   public building = new CreateBuildingDTO;
-  constructor(private route: ActivatedRoute, private buildingService: BuildingService, private router: Router) {
-    console.debug("fsfssdf")
+  constructor(private route: ActivatedRoute, private buildingService: BuildingService, private router: Router, private notificationService: NotificationService) {
     this.form = new FormGroup({
       name: new FormControl(this.building!.name, [Validators.required]),
       address: new FormControl(this.building!.address, [Validators.required]),
@@ -25,17 +25,23 @@ export class BuildingCreateComponent {
   public NavigateToBack() {
     this.router.navigate(['']);
   }
-  public  postForm() {
+  public postForm() {
     Object.assign(this.building, this.form.value);
-     this.buildingService.buildingPOST( this.building).subscribe({
+    this.buildingService.buildingPOST(this.building).subscribe({
       next: (data: BuildingDTO) => {
       },
-      error: (error:Error) => {
-        console.log(error)
-        this.NavigateToBack()
+      error: (error: Error) => {
+        this.notificationService.show({
+          content: error.message,
+          hideAfter: 6000,
+          position: { horizontal: "right", vertical: "bottom" },
+          animation: { type: "fade", duration: 400 },
+          type: { style: "error" },
+
+        });
       },
       complete: () => {
-       this.NavigateToBack()
+        this.NavigateToBack()
       }
     });
   }

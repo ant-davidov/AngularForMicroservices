@@ -23,6 +23,7 @@ import { PagerModule } from "@progress/kendo-angular-pager";
 import { RoomUpdateComponent } from './room/room-update/room-update.component';
 import { RoomCreateComponent } from './room/room-create/room-create.component';
 import { environment } from '../environments/environment';
+import { NotificationModule } from "@progress/kendo-angular-notification";
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { environment } from '../environments/environment';
     DialogsModule,
     DropDownsModule,
     HttpClientModule,
-    PagerModule
+    PagerModule,
+    NotificationModule
   ],
   providers: [{ provide: ICON_SETTINGS, useValue: { type: "font" } }, BuildingService,
     {provide: "API_BUILDING_URL", useValue: environment.API_BUILDING},

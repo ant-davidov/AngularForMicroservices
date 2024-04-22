@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateRoomDTO, RoomService, RoomType } from '../../_services/room.service';
 import { RoomExtendService } from '../../_services/room-extend.service';
 import { ListTypes, RoomTypeMap } from '../common/RoomType';
+import { NotificationService } from '@progress/kendo-angular-notification';
 
 @Component({
   selector: 'app-room-create',
@@ -23,7 +24,7 @@ export class RoomCreateComponent {
     this.getListBuilding()
    
   }
-  constructor( private roomService: RoomService, private router: Router,private roomServiceExtend: RoomExtendService) {
+  constructor( private roomService: RoomService, private router: Router,private roomServiceExtend: RoomExtendService,private notificationService: NotificationService) {
     this.form = new FormGroup({
       building: new FormControl(),
       name: new FormControl(this.room!.name, [Validators.required]),
@@ -54,14 +55,19 @@ export class RoomCreateComponent {
     this.room.number= this.form.value['number']
     this.room.type = this.roomTypeMap[this.form.value['type']]
     this.room.buildingId = this.buildingMap![this.form.value['building']]
-    console.log(this.room)
 
     this.roomService.roomPOST(this.room).subscribe({
       next: () => {
       },
-      error: (error: any) => {
-        console.error("Post ERROR",error)
-        this.NavigateToBack()
+      error: (error: Error) => {
+        this.notificationService.show({
+          content: error.message,
+          hideAfter: 6000,
+          position: { horizontal: "right", vertical: "bottom" },
+          animation: { type: "fade", duration: 400 },
+          type: { style: "error" },
+  
+        });
       },
       complete: () => {
        this.NavigateToBack()

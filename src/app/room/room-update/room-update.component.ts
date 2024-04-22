@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateRoomDTO, RoomDTO, RoomService, RoomType, UpdateRoomDTO } from '../../_services/room.service';
 import { RoomExtendService } from '../../_services/room-extend.service';
 import { ListTypes, RoomTypeMap } from '../common/RoomType';
+import { NotificationService } from '@progress/kendo-angular-notification';
 @Component({
   selector: 'app-room-update',
   templateUrl: './room-update.component.html',
@@ -24,7 +25,7 @@ export class RoomUpdateComponent {
    
   }
 
-  constructor( private roomService: RoomService, private router: Router,private roomServiceExtend: RoomExtendService,private route: ActivatedRoute) {
+  constructor( private roomService: RoomService, private router: Router,private roomServiceExtend: RoomExtendService,private route: ActivatedRoute,private notificationService: NotificationService) {
     this.form = new FormGroup({
       building:  new FormControl(),
       name: new FormControl(this.room!.name, [Validators.required]),
@@ -68,15 +69,22 @@ export class RoomUpdateComponent {
      dto.name = this.form.value["name"];
      dto.number = this.form.value["number"]
      dto.type = this.roomTypeMap[this.form.value["type"]];
-     console.log(dto)
    
     console.debug("fsdfsdf")
    this.roomService.roomPUT(this.Id!, dto).subscribe({
     next: () => {
    
     },
-    error: (error: any) => {
-      console.error("putForm room ERROR")
+    error: (error: Error) => {
+      this.notificationService.show({
+        content: error.message,
+        hideAfter: 6000,
+        position: { horizontal: "right", vertical: "bottom" },
+        animation: { type: "fade", duration: 400 },
+        type: { style: "error" },
+
+      });
+    
     },
     complete: () => {
       this.NavigateToBack()

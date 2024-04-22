@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BuildingDTO, BuildingService } from '../../_services/building.service.service';
 import { Router } from '@angular/router';
 import { concatWith } from 'rxjs';
+import { NotificationService } from '@progress/kendo-angular-notification';
 
 @Component({
   selector: 'app-building-view',
@@ -24,7 +25,7 @@ export class BuildingViewComponent {
     this.GetandSetBuilding()
   }
 
-  constructor(private route: ActivatedRoute, private buildingService: BuildingService, private router: Router) {
+  constructor(private route: ActivatedRoute, private buildingService: BuildingService, private router: Router,private notificationService: NotificationService) {
     this.form = new FormGroup({
       name: new FormControl(this.building!.name, [Validators.required]),
       address: new FormControl(this.building!.address, [Validators.required]),
@@ -61,9 +62,15 @@ export class BuildingViewComponent {
      this.buildingService.buildingPUT(this.Id!, this.building).subscribe({
       next: (data: BuildingDTO) => {
       },
-      error: (error: any) => {
-        console.error("UPDATE ERROR")
-        this.NavigateToBack()
+      error: (error: Error) => {
+        this.notificationService.show({
+          content: error.message,
+          hideAfter: 6000,
+          position: { horizontal: "right", vertical: "bottom" },
+          animation: { type: "fade", duration: 400 },
+          type: { style: "error" },
+
+        });
       },
       complete: () => {
        this.NavigateToBack()
